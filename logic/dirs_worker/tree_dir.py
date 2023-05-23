@@ -51,7 +51,3 @@ class TreeDir:
         wb.save(f"{three_path}/static_without_changes.xlsx")
         wb.save(f"{three_path}/log.xlsx")
         wb.save(f"{three_path}/manual.xlsx")
-
-
-test = TreeDir('documents')
-test.create_new_tree_dir('CH')
