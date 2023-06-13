@@ -5,7 +5,7 @@ from openpyxl import load_workbook
 
 class Avarage:
 
-    def get_data(self):
+    def get_data_from_files(self):
         for folder in os.listdir('../group'):
             hashtable = dict()
             for file in os.listdir(f'../group/{folder}'):
@@ -17,10 +17,13 @@ class Avarage:
                         continue
                     if cell not in hashtable.keys():
                         hashtable[cell] = []
-                    if worksheet.cell(row=row, column=10).value != 0 or worksheet.cell(row=row, column=10).value != '0':
-                        hashtable[cell].append(worksheet.cell(row=row, column=10).value)
+                    if worksheet.cell(row=row, column=9).value != 0 or worksheet.cell(row=row, column=9).value != '0':
+                        hashtable[cell].append(worksheet.cell(row=row, column=9).value)
+            print(hashtable)
 
+    def process_data(self):
+        pass
 
-test = Avarage()
-
-test.get_data()
+    def add_add_in_file(self, data):
+        workbook = load_workbook("./template/average.xlsx")
+        print(workbook)
