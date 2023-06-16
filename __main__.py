@@ -22,7 +22,7 @@ def main():
         "3. Сформировать сводную ведомость",
         "4. Сформировать расчетную ведомость",
     ]
-
+    
     while True:
         print(*action_list, sep='\n')
         action_number = int(input())

@@ -1,7 +1,17 @@
 import sys
+import typing
+from PyQt6.QtCore import QObject
 
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QCalendarWidget, QMainWindow
 from PyQt6 import QtCore
+from sidebar import SideBarButton
+
+
+class MainThread(QtCore.QThread):
+    my_signal = QtCore.pyqtSignal(str)
+    
+    def __init__(self, parent: QObject | None = None) -> None:
+        QtCore.QThread.__init__(self, parent)
 
 
 class MainWindow(QWidget):
@@ -12,12 +22,14 @@ class MainWindow(QWidget):
         self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.btn_quit = QPushButton("&Close")
         self.vbox = QVBoxLayout()
-        # self.calendar = QCalendarWidget()
+        self.buton = SideBarButton()
         self.vbox.addWidget(self.label)
-        # self.vbox.addWidget(self.calendar)
         self.vbox.addWidget(self.btn_quit)
         self.setLayout(self.vbox)
         self.btn_quit.clicked.connect(QApplication.instance().quit)
+        thread = MainThread()
+
+    
 
 
 if __name__ == "__main__":

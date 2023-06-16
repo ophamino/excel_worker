@@ -4,11 +4,19 @@ from datetime import datetime
 from openpyxl import load_workbook, Workbook
 
 
+MONTH_LIST = [
+    "Явнарь", "Февраль", "Март",
+    "Апрель", "Май", "Июнь",
+    "Июль", "Август", 'Сентябрь',
+    'Октябрь', 'Ноябрь', 'Декабрь'
+]
+
+
 class TreeDir:
     """Класс для создания дерева каталогов"""
 
     def __init__(self) -> None:
-        self.main_dir = "../Dagenergy"
+        self.main_dir = r"C:\Users\user\D.E.S. Dropbox\dag sss\ДагЭнерЖи [ОФИС]\Отдел реализации ДЭЖ\Dagenergy"
 
     def validate_dir(self, path: str) -> None:
         """Функция для проверки сущесьвует ли папка"""
@@ -29,7 +37,7 @@ class TreeDir:
         self.validate_dir(self.main_dir)
 
         for folder in folder_name:
-            path = f"{self.main_dir}/{folder}"
+            path = f"{self.main_dir}\{folder}"
             self.validate_dir(path)
 
     def create_analitic_dirs(self) -> None:
@@ -39,22 +47,22 @@ class TreeDir:
             "Анализ по Разногласиям"
         ]
 
-        main_path = f"{self.main_dir}/Аналитика"
+        main_path = f"{self.main_dir}\Аналитика"
         self.validate_dir(main_path)
 
         for folder in folder_name:
-            path = f"{self.main_dir}/{main_path}/{folder}"
+            path = f"{main_path}\{folder}"
             self.validate_dir(path)
 
     def create_disagreements_dirs(self) -> None:
-        main_path = f"{self.main_dir}/Разногласия"
-        year = f"{main_path}/{datetime.now().year}"
+        main_path = f"{self.main_dir}\Разногласия"
+        year = f"{main_path}\{datetime.now().year}"
         self.validate_dir(year)
-        for month_number in range(1, 13):
-            self.validate_dir(f'{year}/{month_number}')
+        for month_number in MONTH_LIST:
+            self.validate_dir(f'{year}\{month_number}')
 
     def create_svod_balance(self):
-        year = f"{self.main_dir}/Сводный баланс/{datetime.now().year}"
+        year = f"{self.main_dir}\Сводный баланс\{datetime.now().year}"
         self.validate_dir(year)
         folders_name = [
             "Бику",
@@ -62,11 +70,21 @@ class TreeDir:
         ]
 
         for folder in folders_name:
-            path = f"{year}/{folder}"
+            departament_names = ["Дагестанские Огни", "Кизилюрт", "Унцукуль", "Кизляр", "Махачкала"]
+            path = f"{year}\{folder}"
             self.validate_dir(path)
-            for month_number in range(1, 13):
-                month = f"{path}/{month_number}"
+            for month_number in MONTH_LIST:
+                month = f"{path}\{month_number}"
                 self.validate_dir(month)
-                for departament in range(1, 6):
-                    departament = f"{month}/Отделение {departament}"
+                for departament in departament_names:
+                    departament = f"{month}\{departament}"
                     self.validate_dir(departament)
+        
+    def create_tree_dir(self) -> None:
+        self.crete_main_folders()
+        self.create_analitic_dirs()
+        self.create_disagreements_dirs()
+        self.create_svod_balance()
+
+test = TreeDir()
+test.create_tree_dir()
