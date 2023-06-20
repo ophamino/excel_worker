@@ -1,21 +1,7 @@
 from PyQt6.QtWidgets import *
 import sys
 
-
-style = """
-    background-color: #fbeee0;
-    border: 2px solid #422800;
-    border-radius: 30px;
-    color: #422800;
-    font-weight: 600;
-    font-size: 18px;
-    padding: 0 18px;
-    line-height: 50px;
-    text-align: center;
-    text-decoration: none;
-    height: 65px;
-    width: 250px;
-"""
+from rightside.buttons import RightButton
 
 
 class Window(QMainWindow):
@@ -33,12 +19,13 @@ class Window(QMainWindow):
         self.btn_4 = QPushButton('Аналитика', self)
         self.btn_5 = QPushButton('Структура сети', self)
         self.btn_6 = QPushButton('Разногласия', self)
-        self.btn_1.setStyleSheet(style)
-        self.btn_2.setStyleSheet(style)
-        self.btn_3.setStyleSheet(style)
-        self.btn_4.setStyleSheet(style)
-        self.btn_5.setStyleSheet(style)
-        self.btn_6.setStyleSheet(style)
+    
+        # self.btn_1.setStyleSheet(style)
+        # self.btn_2.setStyleSheet(style)
+        # self.btn_3.setStyleSheet(style)
+        # self.btn_4.setStyleSheet(style)
+        # self.btn_5.setStyleSheet(style)
+        # self.btn_6.setStyleSheet(style)
 
         self.btn_1.clicked.connect(self.button1)
         self.btn_2.clicked.connect(self.button2)
@@ -113,16 +100,25 @@ class Window(QMainWindow):
 
     def ui1(self):
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel('page 1'))
+        label = QLabel("Сводный баланс")
+        main_layout.addWidget(label)
+        main_layout.addWidget(RightButton("Отчет", "Сформировать отчет гп"))
+        main_layout.addWidget(RightButton("Number 2", "ghbd"))
+        label.setStyleSheet(
+            "font-size: 18px;"
+            "font-weight: bold;"
+            "margin-bottom: 1em;"
+            "margin-top: 0.3em;"
+        )
+
         main_layout.addStretch(5)
-        main_layout.addWidget(QPushButton("click me"))
         main = QWidget()
         main.setLayout(main_layout)
         return main
 
     def ui2(self):
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel('page 2'))
+        main_layout.addWidget(QLabel("Потребители"))
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
@@ -130,7 +126,7 @@ class Window(QMainWindow):
 
     def ui3(self):
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel('page 3'))
+        main_layout.addWidget(QLabel("БИКУ"))
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
@@ -138,7 +134,7 @@ class Window(QMainWindow):
 
     def ui4(self):
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel('page 4'))
+        main_layout.addWidget(QLabel("Аналитика"))
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
@@ -146,7 +142,7 @@ class Window(QMainWindow):
 
     def ui5(self):
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel('page 5'))
+        main_layout.addWidget(QLabel("Структура сети"))
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
@@ -154,7 +150,7 @@ class Window(QMainWindow):
 
     def ui6(self):
         main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel('page 6'))
+        main_layout.addWidget(QLabel("Разногласия"))
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
