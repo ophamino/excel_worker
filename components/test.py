@@ -2,11 +2,27 @@ from PyQt6.QtWidgets import *
 import sys
 
 
+style = """
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    color: #422800;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    height: 65px;
+    width: 250px;
+"""
+
+
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('ДагЭнерДжи')
-        self.Width = 800
+        self.Width = 1200
         self.height = int(0.618 * self.Width)
         self.resize(self.Width, self.height)
 
@@ -15,32 +31,29 @@ class Window(QMainWindow):
         self.btn_2 = QPushButton('Потребители', self)
         self.btn_3 = QPushButton('Бику', self)
         self.btn_4 = QPushButton('Аналитика', self)
-        self.btn_4.setStyleSheet(
-            "background-color: #fbeee0;"
-            "border: 2px solid #422800;"
-            "border-radius: 30px;"
-            "color: #422800;"
-            "font-weight: 600;"
-            "font-size: 18px;"
-            "padding: 0 18px;"
-            "line-height: 50px;"
-            "text-align: center;"
-            "text-decoration: none;"
-            "height: 65px;"
-            "width: 250px;"
-
-        )
+        self.btn_5 = QPushButton('Структура сети', self)
+        self.btn_6 = QPushButton('Разногласия', self)
+        self.btn_1.setStyleSheet(style)
+        self.btn_2.setStyleSheet(style)
+        self.btn_3.setStyleSheet(style)
+        self.btn_4.setStyleSheet(style)
+        self.btn_5.setStyleSheet(style)
+        self.btn_6.setStyleSheet(style)
 
         self.btn_1.clicked.connect(self.button1)
         self.btn_2.clicked.connect(self.button2)
         self.btn_3.clicked.connect(self.button3)
         self.btn_4.clicked.connect(self.button4)
+        self.btn_5.clicked.connect(self.button5)
+        self.btn_6.clicked.connect(self.button6)
 
         # add tabs
         self.tab1 = self.ui1()
         self.tab2 = self.ui2()
         self.tab3 = self.ui3()
         self.tab4 = self.ui4()
+        self.tab5 = self.ui5()
+        self.tab6 = self.ui6()
 
         self.initUI()
 
@@ -50,6 +63,8 @@ class Window(QMainWindow):
         left_layout.addWidget(self.btn_2)
         left_layout.addWidget(self.btn_3)
         left_layout.addWidget(self.btn_4)
+        left_layout.addWidget(self.btn_5)
+        left_layout.addWidget(self.btn_6)
         left_layout.addStretch(5)
         left_layout.setSpacing(20)
         left_widget = QWidget()
@@ -62,6 +77,8 @@ class Window(QMainWindow):
         self.right_widget.addTab(self.tab2, '')
         self.right_widget.addTab(self.tab3, '')
         self.right_widget.addTab(self.tab4, '')
+        self.right_widget.addTab(self.tab5, '')
+        self.right_widget.addTab(self.tab6, '')
 
         self.right_widget.setCurrentIndex(0)
         self.right_widget.setStyleSheet('''QTabBar::tab{width: 0; \
@@ -76,9 +93,6 @@ class Window(QMainWindow):
         main_widget.setLayout(main_layout)
         self.setCentralWidget(main_widget)
 
-    # ----------------- 
-    # buttons
-
     def button1(self):
         self.right_widget.setCurrentIndex(0)
 
@@ -91,13 +105,17 @@ class Window(QMainWindow):
     def button4(self):
         self.right_widget.setCurrentIndex(3)
 
-    # ----------------- 
-    # pages
+    def button5(self):
+        self.right_widget.setCurrentIndex(4)
+
+    def button6(self):
+        self.right_widget.setCurrentIndex(5)
 
     def ui1(self):
         main_layout = QVBoxLayout()
         main_layout.addWidget(QLabel('page 1'))
         main_layout.addStretch(5)
+        main_layout.addWidget(QPushButton("click me"))
         main = QWidget()
         main.setLayout(main_layout)
         return main
@@ -121,6 +139,22 @@ class Window(QMainWindow):
     def ui4(self):
         main_layout = QVBoxLayout()
         main_layout.addWidget(QLabel('page 4'))
+        main_layout.addStretch(5)
+        main = QWidget()
+        main.setLayout(main_layout)
+        return main
+
+    def ui5(self):
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(QLabel('page 5'))
+        main_layout.addStretch(5)
+        main = QWidget()
+        main.setLayout(main_layout)
+        return main
+
+    def ui6(self):
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(QLabel('page 6'))
         main_layout.addStretch(5)
         main = QWidget()
         main.setLayout(main_layout)
