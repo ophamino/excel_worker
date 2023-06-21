@@ -1,7 +1,7 @@
-from PyQt6.QtWidgets import *
+from PyQt6.QtWidgets import QPushButton, QMainWindow, QVBoxLayout, QTabWidget, QWidget, QHBoxLayout, QApplication
 import sys
 
-from rightside.buttons import RightButton
+from rightside.ui import svod_balance_ui, consumers_ui, biku_ui, analitic_ui, network_structure_ui, disagreements_ui
 
 
 class Window(QMainWindow):
@@ -19,13 +19,6 @@ class Window(QMainWindow):
         self.btn_4 = QPushButton('Аналитика', self)
         self.btn_5 = QPushButton('Структура сети', self)
         self.btn_6 = QPushButton('Разногласия', self)
-    
-        # self.btn_1.setStyleSheet(style)
-        # self.btn_2.setStyleSheet(style)
-        # self.btn_3.setStyleSheet(style)
-        # self.btn_4.setStyleSheet(style)
-        # self.btn_5.setStyleSheet(style)
-        # self.btn_6.setStyleSheet(style)
 
         self.btn_1.clicked.connect(self.button1)
         self.btn_2.clicked.connect(self.button2)
@@ -35,12 +28,12 @@ class Window(QMainWindow):
         self.btn_6.clicked.connect(self.button6)
 
         # add tabs
-        self.tab1 = self.ui1()
-        self.tab2 = self.ui2()
-        self.tab3 = self.ui3()
-        self.tab4 = self.ui4()
-        self.tab5 = self.ui5()
-        self.tab6 = self.ui6()
+        self.svosvod_balance_tab = svod_balance_ui()
+        self.consumers_tab = consumers_ui()
+        self.biku_tab = biku_ui()
+        self.analitic_tab = analitic_ui()
+        self.network_structure_tab = network_structure_ui()
+        self.disagreements_tab = disagreements_ui()
 
         self.initUI()
 
@@ -58,14 +51,17 @@ class Window(QMainWindow):
         left_widget.setLayout(left_layout)
 
         self.right_widget = QTabWidget()
+        self.right_widget.setStyleSheet(
+            "QTabWidget {border:1px solid #000000; border-radius: 10px;}"
+        )
         self.right_widget.tabBar().setObjectName("mainTab")
 
-        self.right_widget.addTab(self.tab1, '')
-        self.right_widget.addTab(self.tab2, '')
-        self.right_widget.addTab(self.tab3, '')
-        self.right_widget.addTab(self.tab4, '')
-        self.right_widget.addTab(self.tab5, '')
-        self.right_widget.addTab(self.tab6, '')
+        self.right_widget.addTab(self.svosvod_balance_tab, '')
+        self.right_widget.addTab(self.consumers_tab, '')
+        self.right_widget.addTab(self.biku_tab, '')
+        self.right_widget.addTab(self.analitic_tab, '')
+        self.right_widget.addTab(self.network_structure_tab, '')
+        self.right_widget.addTab(self.disagreements_tab, '')
 
         self.right_widget.setCurrentIndex(0)
         self.right_widget.setStyleSheet('''QTabBar::tab{width: 0; \
@@ -97,64 +93,6 @@ class Window(QMainWindow):
 
     def button6(self):
         self.right_widget.setCurrentIndex(5)
-
-    def ui1(self):
-        main_layout = QVBoxLayout()
-        label = QLabel("Сводный баланс")
-        main_layout.addWidget(label)
-        main_layout.addWidget(RightButton("Отчет", "Сформировать отчет гп"))
-        main_layout.addWidget(RightButton("Number 2", "ghbd"))
-        label.setStyleSheet(
-            "font-size: 18px;"
-            "font-weight: bold;"
-            "margin-bottom: 1em;"
-            "margin-top: 0.3em;"
-        )
-
-        main_layout.addStretch(5)
-        main = QWidget()
-        main.setLayout(main_layout)
-        return main
-
-    def ui2(self):
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel("Потребители"))
-        main_layout.addStretch(5)
-        main = QWidget()
-        main.setLayout(main_layout)
-        return main
-
-    def ui3(self):
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel("БИКУ"))
-        main_layout.addStretch(5)
-        main = QWidget()
-        main.setLayout(main_layout)
-        return main
-
-    def ui4(self):
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel("Аналитика"))
-        main_layout.addStretch(5)
-        main = QWidget()
-        main.setLayout(main_layout)
-        return main
-
-    def ui5(self):
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel("Структура сети"))
-        main_layout.addStretch(5)
-        main = QWidget()
-        main.setLayout(main_layout)
-        return main
-
-    def ui6(self):
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(QLabel("Разногласия"))
-        main_layout.addStretch(5)
-        main = QWidget()
-        main.setLayout(main_layout)
-        return main
 
 
 if __name__ == '__main__':
