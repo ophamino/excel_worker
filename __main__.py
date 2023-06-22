@@ -1,15 +1,8 @@
 from logic.dirs_worker import tree_dir
 from logic.file_worker import log
 from logic.comparer import comparer, caluclater
-
+from logic.const import MONTH_LIST
 import os
-
-
-MONTH_LIST = [
-    'Январь', 'Февраль', 'Март', 'Апрель',
-    'Май', 'Июнь', 'Июль', 'Август',
-    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-]
 
 
 def main():
@@ -37,7 +30,7 @@ def main():
             print("Новая база данных создана!")
 
         if action_number == 2:
-            log.add_changes_in_log()
+            log.change_log()
 
         if action_number == 3:
             for number, month in enumerate(MONTH_LIST, 1):
@@ -48,11 +41,11 @@ def main():
             status = input("Выберите статус сводной ведомости: ")
             if status == "1":
                 try:
-                    comparer.comparer("FL", month)
+                    comparer.comparer("Бытового", month)
                 except Exception:
                     print('Введены неверные данные, повторите попытку.')
             if status == "2":
-                comparer.comparer("UL", month)
+                comparer.comparer("Коммерческого", month)
 
         if action_number == 4:
             for number, month in enumerate(MONTH_LIST, 1):

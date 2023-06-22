@@ -1,22 +1,14 @@
 import os
 from datetime import datetime
 
-from openpyxl import load_workbook, Workbook
-
-
-MONTH_LIST = [
-    "Явнарь", "Февраль", "Март",
-    "Апрель", "Май", "Июнь",
-    "Июль", "Август", 'Сентябрь',
-    'Октябрь', 'Ноябрь', 'Декабрь'
-]
+from logic.const import MAIN_DIR, MONTH_LIST, DEPARTAMENT_NAMES
 
 
 class TreeDir:
     """Класс для создания дерева каталогов"""
 
     def __init__(self) -> None:
-        self.main_dir = r"C:\Users\user\D.E.S. Dropbox\dag sss\ДагЭнерЖи [ОФИС]\Отдел реализации ДЭЖ\Dagenergy"
+        self.main_dir = MAIN_DIR
 
     def validate_dir(self, path: str) -> None:
         """Функция для проверки сущесьвует ли папка"""
@@ -70,13 +62,12 @@ class TreeDir:
         ]
 
         for folder in folders_name:
-            departament_names = ["Дагестанские Огни", "Кизилюрт", "Унцукуль", "Кизляр", "Махачкала"]
             path = f"{year}\{folder}"
             self.validate_dir(path)
             for month_number in MONTH_LIST:
                 month = f"{path}\{month_number}"
                 self.validate_dir(month)
-                for departament in departament_names:
+                for departament in DEPARTAMENT_NAMES:
                     departament = f"{month}\{departament}"
                     self.validate_dir(departament)
         

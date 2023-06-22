@@ -1,5 +1,7 @@
 from .svod_comparer import Comparer
-from .calculation_fl import Calculation
+from .calculation import Calculation
 
-comparer = Comparer('../doc')
+from logic.const import MAIN_DIR
+
+comparer = Comparer(MAIN_DIR)
 caluclater = Calculation("../doc")

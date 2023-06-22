@@ -1,3 +1,3 @@
-from .log_changes import LogChanges
+from .log_changes import Log
 
-log = LogChanges('../doc')
+log = Log()
