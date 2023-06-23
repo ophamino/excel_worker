@@ -2,24 +2,33 @@ from openpyxl import load_workbook
 from datetime import datetime
 import os
 
+from logic.const import MAIN_DIR, MONTH_LIST
 
 class Comparer:
 
-    def __init__(self, main_dir: str) -> None:
-        self.main_dir = main_dir
+    def __init__(self) -> None:
+        self.main_dir = MAIN_DIR
+        self.year = datetime.now().year
+        self.month = datetime.now().month
 
     def comparer(self, file_status: str, month: str) -> None:
-        for folder in os.listdir(self.main_dir):
-            static_path = f'{self.main_dir}/{folder}/{str(datetime.now().year)}/'
-            svod = load_workbook('template/svod.xlsx')
-            if month not in svod.sheetnames:
-                svod.create_sheet(month)
+        static_path = f'{self.main_dir}\Сводный баланс\{self.year}\УПП'
 
-            svod_sheet = svod[month]
-            month_path = static_path + month
-            for departement in os.listdir(month_path):
-                workbook = load_workbook(f'{month_path}/{departement}/RV{str(datetime.now().year)}{file_status}.xlsx').worksheets[0]
+        if not static_path in os.listdir(static_path):
+            svod = load_workbook('template/svod.xlsx')
+            svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
+        svod = load_workbook(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx", data_only=True)
+        svod_sheet = svod[str(month)]
+
+        month_path = f"{static_path}\{MONTH_LIST[month - 2]}"
+
+        for departement in os.listdir(month_path):
+            try:
+                workbook = load_workbook(f'{month_path}\{departement}\РВ {file_status} потребления.xlsx').worksheets[0]
                 for row in workbook.iter_rows(min_row=11, values_only=True):
                     svod_sheet.append(row)
+            except Exception:
+                print(f"[INFO] Сформировать документ невозможно, Файл отсутсвует или не соответсвует синтаксису."
+                      f"[INFO] Папка: {month_path}\{departement}")
 
-            svod.save(f'{self.main_dir}/{folder}/{str(datetime.now().year)}/SVOD{str(datetime.now().year)}{file_status}.xlsx')
+        svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
