@@ -20,7 +20,8 @@ class Comparer:
         svod = load_workbook(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx", data_only=True)
         svod_sheet = svod[str(month)]
 
-        month_path = f"{static_path}\{MONTH_LIST[month - 2]}"
+        month_path = f"{static_path}\{MONTH_LIST[month - 1]}"
+        print(month_path)
 
         for departement in os.listdir(month_path):
             try:

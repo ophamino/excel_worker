@@ -15,7 +15,7 @@ class Calculation:
 
     def calculate(self, file_status: str, month: str) -> None:
         static_file = load_workbook(f'{MAIN_DIR}\Потребители\Реестр статических данных.xlsx').worksheets[0]
-        svod = load_workbook(f'{MAIN_DIR}\Сводный баланс\{self.year}\УПП\Сводная ведомость {file_status} потребления.xlsx').worksheets[month]
+        svod = load_workbook(f'{MAIN_DIR}\Сводный баланс\{self.year}\УПП\Сводная ведомость {file_status} потребления.xlsx').worksheets[month - 1]
         result = load_workbook('template\\rv.xlsx')
         result_sheet = result.worksheets[0]
 
