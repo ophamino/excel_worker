@@ -1,6 +1,7 @@
 from openpyxl import load_workbook
 import os
 from datetime import datetime
+from openpyxl.styles import numbers
 
 
 from logic.const import MAIN_DIR, MONTH_LIST, DEPARTAMENT_NAMES_WITH_KEYS
@@ -29,7 +30,7 @@ class Calculation:
                             static_file.cell(row=row_static, column=4).value,  # C
                             static_file.cell(row=row_static, column=5).value,  # D
                             static_file.cell(row=row_static, column=6).value,  # E
-                            static_file.cell(row=row_static, column=7).value,  # F
+                            str(static_file.cell(row=row_static, column=7).value),  # F
                             static_file.cell(row=row_static, column=8).value,  # G
                             static_file.cell(row=row_static, column=9).value,  # H
                             static_file.cell(row=row_static, column=10).value,  # I
@@ -42,17 +43,17 @@ class Calculation:
                             static_file.cell(row=row_static, column=24).value,  # P
                             static_file.cell(row=row_static, column=27).value,  # Q
                             static_file.cell(row=row_static, column=28).value,  # R
-                            static_file.cell(row=row_static, column=29).value,  # S
+                            str(static_file.cell(row=row_static, column=29).value),  # S
                             static_file.cell(row=row_static, column=30).value,  # T
                             svod.cell(row=row_svod, column=22).value,  # u
                             svod.cell(row=row_svod, column=22).value,  # v
-                            svod.cell(row=row_svod, column=23).value,  # w
-                            svod.cell(row=row_svod, column=24).value,  # x
+                            "=V{0}-U{0}".format(row_svod),  # w
+                            "=W{0}*T{0}".format(row_svod),  # x
                             svod.cell(row=row_svod, column=25).value,  # y
                             svod.cell(row=row_svod, column=26).value,  # z
                             svod.cell(row=row_svod, column=27).value,  # aa
                             svod.cell(row=row_svod, column=28).value,  # ab
-                            svod.cell(row=row_svod, column=29).value,  # ac
+                            "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(row_svod),  # ac
                             svod.cell(row=row_svod, column=30).value,  # ad
                             '',  # ae
                             svod.cell(row=row_svod, column=32).value,  # af
@@ -83,6 +84,16 @@ class Calculation:
             for departament_row in departament_data:
                 worksheet.append(departament_row)
             
+            for report_row in range(6, worksheet.max_row+1):
+                worksheet["W{}".format(report_row)] = "=V{0}-U{0}".format(report_row)
+                worksheet["X{}".format(report_row)] = "=W{0}*T{0}".format(report_row)
+                worksheet["AC{}".format(report_row)] = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+                if worksheet.cell(row=report_row, column=6).value == "None":
+                    worksheet.cell(row=report_row, column=6).value = ""
+                if worksheet.cell(row=report_row, column=19).value == "None":
+                    worksheet.cell(row=report_row, column=19).value = ""
+
+
             stuf_name = DEPARTAMENT_NAMES_WITH_KEYS[departament]
             mon = MONTH_LIST[month + 1]
 

@@ -1,6 +1,7 @@
 from openpyxl import load_workbook
 from datetime import datetime
 import os
+from openpyxl.styles import numbers
 
 from logic.const import MAIN_DIR, MONTH_LIST
 
@@ -17,7 +18,7 @@ class Comparer:
         if not static_path in os.listdir(static_path):
             svod = load_workbook('template/svod.xlsx')
             svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
-        svod = load_workbook(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx", data_only=True)
+        svod = load_workbook(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
         svod_sheet = svod[str(month)]
 
         month_path = f"{static_path}\{MONTH_LIST[month - 1]}"
@@ -31,5 +32,10 @@ class Comparer:
             except Exception:
                 print(f"[INFO] Сформировать документ невозможно, Файл отсутсвует или не соответсвует синтаксису."
                       f"[INFO] Папка: {month_path}\{departement}")
-
+        
+        for report_row in range(6, svod_sheet.max_row+1):
+                svod_sheet["W{}".format(report_row)] = "=V{0}-U{0}".format(report_row)
+                svod_sheet["X{}".format(report_row)] = "=W{0}*T{0}".format(report_row)
+                svod_sheet["AC{}".format(report_row)] = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+                
         svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
