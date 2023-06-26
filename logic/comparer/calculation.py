@@ -56,9 +56,9 @@ class Calculation:
                             "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(row_svod),  # ac
                             svod.cell(row=row_svod, column=30).value,  # ad
                             '',  # ae
-                            svod.cell(row=row_svod, column=32).value,  # af
-                            svod.cell(row=row_svod, column=33).value,  # ag
-                            svod.cell(row=row_svod, column=34).value,  # ah
+                            "",  # af
+                            "",  # ag
+                            "",  # ah
                             svod.cell(row=row_svod, column=35).value,  # ai
                             svod.cell(row=row_svod, column=36).value,  # aj
                             svod.cell(row=row_svod, column=37).value,  # ak
