@@ -51,8 +51,8 @@ class Calculation:
                             "=W{0}*T{0}".format(row_svod),  # x
                             svod.cell(row=row_svod, column=25).value,  # y
                             svod.cell(row=row_svod, column=26).value,  # z
-                            svod.cell(row=row_svod, column=27).value,  # aa
-                            svod.cell(row=row_svod, column=28).value,  # ab
+                            "",  # aa
+                            "",  # ab
                             "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(row_svod),  # ac
                             svod.cell(row=row_svod, column=30).value,  # ad
                             '',  # ae
