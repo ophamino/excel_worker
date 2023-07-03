@@ -13,8 +13,8 @@ class Log:
         self.changes_file_name = 'Реестр статических данных для сравнения.xlsx'
         self.log_file_name = 'Журнал изменений.xlsx'
 
-        self.static_file = load_workbook(f'{MAIN_DIR}\Потребители\{self.static_file_name}')
-        self.changes_file = load_workbook(f"./template/{self.changes_file_name}")
+        self.static_file = load_workbook(f'{MAIN_DIR}\Потребители\{self.static_file_name}', data_only=True)
+        self.changes_file = load_workbook(f"./template/{self.changes_file_name}", data_only=True)
 
         self.static_file_sheet = self.static_file.worksheets[0]
         self.changes_file_sheet = self.changes_file.worksheets[0]
@@ -36,7 +36,7 @@ class Log:
                 changes.append(
                     [
                         1,
-                        self.static_file_sheet.cell(row=changes_row, column=3).value,
+                        self.static_file_sheet.cell(row=changes_row, column=4).value,
                         self.static_file_sheet.cell(row=4, column=column).value,
                         self.changes_file_sheet.cell(row=changes_row, column=column).coordinate,
                         self.changes_file_sheet.cell(row=changes_row, column=column).value,
@@ -63,27 +63,35 @@ class Log:
         if self.log_file_name not in os.listdir(f'{MAIN_DIR}\Потребители'):
             log_file = load_workbook("./template/log.xlsx").save(f'{MAIN_DIR}\Потребители\{self.log_file_name}')
         log_file = load_workbook(f'{MAIN_DIR}\Потребители\{self.log_file_name}')
+        try:
+            log_sheet = log_file[str(self.date.year)]
 
-        if not str(self.date) in log_file.sheetnames:
-            log_file.create_sheet(str(self.date.year))
-        log_sheet = log_file[str(self.date.year)]
-
-        for log_data in data:
-            log_sheet.append(log_data)
-        log_file.save(f'{MAIN_DIR}\Потребители\{self.log_file_name}')
+            for log_data in data:
+                log_sheet.append(log_data)
+            log_file.save(f'{MAIN_DIR}\Потребители\{self.log_file_name}')
+        except Exception:
+            print("[ERROR] Листа с текущим годом не существует, создайте его перед тем как начать работу")
 
     def change_log(self):
-        changes_ID = set([self.static_file_sheet.cell(row=i, column=3).value for i in range(9, self.static_file_sheet.max_row + 1)])
-        static_ID = set([self.changes_file_sheet.cell(row=i, column=3).value for i in range(9, self.changes_file_sheet.max_row + 1)])
+        changes_ID = set([self.changes_file_sheet.cell(row=i, column=4).value for i in range(9, self.changes_file_sheet.max_row + 1)])
+        static_ID = set([self.static_file_sheet.cell(row=i, column=4).value for i in range(9, self.static_file_sheet.max_row + 1)])
 
-        added_ids = list(static_ID.difference(changes_ID))
-        deleted_ids = list(changes_ID.difference(static_ID))
+        added_ID = list(static_ID.difference(changes_ID))
+        deleted_ID = list(changes_ID.difference(static_ID))
 
+        print("[INFO] Начинаем поиск изменений")
         changes_data = self.search_changes()
-        added_data = self.get_status_data(added_ids, status="Добавлено")
-        deleted_data = self.get_status_data(deleted_ids, status="Удалено")
+        added_data = self.get_status_data(added_ID, status="Добавлено")
+        deleted_data = self.get_status_data(deleted_ID, status="Удалено")
 
         all_data = changes_data + added_data + deleted_data
+        print(changes_data)
+        self.static_file.save(f"./template/Реестр статических данных для сравнения.xlsx")
+        print("[INFO] записываем изменения в Журнал")
         self.append_data_in_log(all_data)
-
-        self.static_file.save(f"./template/{self.changes_file_name}")
+        print(
+            f"\n[INFO] Измененно строк: {len(changes_data)}\n"
+            f"[INFO] Добавленно строк: {len(added_data)}\n"
+            f"[INFO] Удаленно строк: {len(deleted_data)}\n"
+            f"[INFO] Всего строк: {len(all_data)}\n"
+        )
