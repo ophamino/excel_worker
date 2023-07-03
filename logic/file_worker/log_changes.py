@@ -9,8 +9,8 @@ from logic.const import MAIN_DIR
 class Log:
 
     def __init__(self) -> None:
-        self.static_file_name = 'Реестр статических данных.xlsx'
-        self.changes_file_name = 'Реестр статических данных для сравнения.xlsx'
+        self.static_file_name = 'Реестр потребителей.xlsx'
+        self.changes_file_name = 'Реестр потребителей для сравнения.xlsx'
         self.log_file_name = 'Журнал изменений.xlsx'
 
         self.static_file = load_workbook(f'{MAIN_DIR}\Потребители\{self.static_file_name}', data_only=True)
@@ -86,7 +86,7 @@ class Log:
 
         all_data = changes_data + added_data + deleted_data
         print(changes_data)
-        self.static_file.save(f"./template/Реестр статических данных для сравнения.xlsx")
+        self.static_file.save(f"./template/Реестр потребителей для сравнения.xlsx")
         print("[INFO] записываем изменения в Журнал")
         self.append_data_in_log(all_data)
         print(

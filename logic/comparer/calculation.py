@@ -15,14 +15,14 @@ class Calculation:
         self.month = datetime.now().month
 
     def calculate(self, file_status: str, month: str) -> None:
-        static_file = load_workbook(f'{MAIN_DIR}\Потребители\Реестр статических данных.xlsx').worksheets[0]
+        static_file = load_workbook(f'{MAIN_DIR}\Потребители\Реестр потребителей.xlsx').worksheets[0]
         svod = load_workbook(f'{MAIN_DIR}\Сводный баланс\{self.year}\УПП\Сводная ведомость {file_status} потребления.xlsx').worksheets[month - 1]
         result = load_workbook('template\\rv.xlsx')
         result_sheet = result.worksheets[0]
 
         for row_svod in range(6, svod.max_row + 1):
             for row_static in range(9, static_file.max_row + 1):
-                if svod.cell(row=row_svod, column=3).value == static_file.cell(row=row_static, column=4).value and static_file.cell(row=row_static, column=52).value == "Активен":
+                if svod.cell(row=row_svod, column=3).value == static_file.cell(row=row_static, column=4).value and static_file.cell(row=row_static, column=55).value == "Активен":
                     result_sheet.append(
                         [
                             1,  # A
