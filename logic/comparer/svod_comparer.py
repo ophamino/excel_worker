@@ -26,7 +26,8 @@ class Comparer:
 
         for departement in os.listdir(month_path):
             try:
-                workbook = load_workbook(f'{month_path}\{departement}\РВ {file_status} потребления.xlsx').worksheets[0]
+                file_name = list(filter(lambda x: file_status in x, os.listdir(f"{month_path}\{departement}")))[0]
+                workbook = load_workbook(f'{month_path}\{departement}\{file_name}').worksheets[0]
                 for row in workbook.iter_rows(min_row=11, values_only=True):
                     svod_sheet.append(row)
             except Exception:

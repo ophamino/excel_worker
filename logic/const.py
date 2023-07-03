@@ -1,4 +1,4 @@
-MAIN_DIR = r"C:\Users\admin\D.E.S. Dropbox\dag sss\ДагЭнерЖи [ОФИС]\Отдел реализации ДЭЖ\Dagenergy"
+MAIN_DIR = r"C:\Users\user\D.E.S. Dropbox\dag sss\ДагЭнерЖи [ОФИС]\Отдел реализации ДЭЖ\Dagenergy"
 
 MONTH_LIST = [
     "Явнарь", "Февраль", "Март",
