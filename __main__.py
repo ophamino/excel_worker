@@ -49,7 +49,7 @@ def main():
         if action_number == 3:
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')
-            month = int(input('Введите номер месяца: ')) - 1
+            month = int(input('Введите номер месяца:  ')) - 1
             print("1. Бытовое потребление",
                   '2. Комерческое потребление',
                   sep='\n')
