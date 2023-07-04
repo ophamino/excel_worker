@@ -1,3 +1,1 @@
-from .log_changes import Log
-
-log = Log()
+from .log_changes import change_log

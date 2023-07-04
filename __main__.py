@@ -1,5 +1,5 @@
 from logic.dirs_worker import tree_dir
-from logic.file_worker import log
+from logic.file_worker import change_log
 from logic.comparer import comparer, caluclater
 from logic.const import MONTH_LIST
 
@@ -29,7 +29,7 @@ def main():
             break
 
         if action_number == 1:
-            log.change_log()
+            change_log()
 
         if action_number == 2:
             for number, month in enumerate(MONTH_LIST, 1):
