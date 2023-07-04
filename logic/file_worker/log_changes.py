@@ -7,7 +7,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 from logic.const import MAIN_DIR
 
 
-static_file_name = 'Реестр потребителей — копия.xlsx'
+static_file_name = 'Реестр потребителей.xlsx'
 changes_file_name = 'Реестр потребителей для сравнения.xlsx'
 log_file_name = 'Журнал изменений.xlsx'
 
