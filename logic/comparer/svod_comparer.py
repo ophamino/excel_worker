@@ -30,9 +30,10 @@ class Comparer:
                 workbook = load_workbook(f'{month_path}\{departement}\{file_name}').worksheets[0]
                 for row in workbook.iter_rows(min_row=11, values_only=True):
                     svod_sheet.append(row)
-            except Exception:
+            except Exception as e:
                 print(f"[INFO] Сформировать документ невозможно, Файл отсутсвует или не соответсвует синтаксису."
                       f"[INFO] Папка: {month_path}\{departement}")
+                print(e)
         
         for report_row in range(6, svod_sheet.max_row+1):
                 svod_sheet["W{}".format(report_row)] = "=V{0}-U{0}".format(report_row)

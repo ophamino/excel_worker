@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from openpyxl.styles import numbers
 
+from numba import jit
 
 from logic.const import MAIN_DIR, MONTH_LIST, DEPARTAMENT_NAMES_WITH_KEYS
 
@@ -19,6 +20,8 @@ class Calculation:
         svod = load_workbook(f'{MAIN_DIR}\Сводный баланс\{self.year}\УПП\Сводная ведомость {file_status} потребления.xlsx').worksheets[month - 1]
         result = load_workbook('template\\rv.xlsx')
         result_sheet = result.worksheets[0]
+
+        print("[INFO] Собираем данные")
 
         for row_svod in range(6, svod.max_row + 1):
             for row_static in range(9, static_file.max_row + 1):
@@ -69,6 +72,7 @@ class Calculation:
                         ]
                     )
                     break
+        print("[INFO] Данные загружены")
 
 
 
@@ -88,13 +92,17 @@ class Calculation:
                 worksheet["W{}".format(report_row)] = "=V{0}-U{0}".format(report_row)
                 worksheet["X{}".format(report_row)] = "=W{0}*T{0}".format(report_row)
                 worksheet["AC{}".format(report_row)] = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+                worksheet["Y{}".format(report_row)] = "=ЕСЛИ(ЕПУСТО(AL{});0;ОКРУГЛ((X{}*AL{});0))".format(report_row)
+
                 if worksheet.cell(row=report_row, column=6).value == "None":
                     worksheet.cell(row=report_row, column=6).value = ""
                 if worksheet.cell(row=report_row, column=19).value == "None":
                     worksheet.cell(row=report_row, column=19).value = ""
+                print()
 
 
             stuf_name = DEPARTAMENT_NAMES_WITH_KEYS[departament]
-            mon = MONTH_LIST[month + 1]
+            mon = MONTH_LIST[month]
 
             workbook.save(f"{MAIN_DIR}\Сводный баланс\{self.year}\УПП\{MONTH_LIST[month]}\{stuf_name}\РВ {stuf_name} {file_status} потребления {mon} {self.year}.xlsx")
+            print(f"[INFO] Файл " + f"РВ {stuf_name} {file_status} потребления {mon} {self.year}.xlsx сформирован")
