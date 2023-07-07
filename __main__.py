@@ -5,7 +5,7 @@ from logic.const import MONTH_LIST
 from logic.comparer import bicu
 
 
-bicu.comparer(5)
+bicu.calculate(5)
 
 def main():
     print()

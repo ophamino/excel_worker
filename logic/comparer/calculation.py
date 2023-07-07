@@ -105,3 +105,4 @@ class Calculation:
 
             workbook.save(f"{MAIN_DIR}\Сводный баланс\{self.year}\УПП\{MONTH_LIST[month]}\{stuf_name}\РВ {stuf_name} {file_status} потребления {mon} {self.year}.xlsx")
             print(f"[INFO] Файл " + f"РВ {stuf_name} {file_status} потребления {mon} {self.year}.xlsx сформирован")
+
