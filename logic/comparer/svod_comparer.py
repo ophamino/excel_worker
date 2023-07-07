@@ -27,7 +27,7 @@ class Comparer:
         for departement in os.listdir(month_path):
             try:
                 file_name = list(filter(lambda x: file_status in x, os.listdir(f"{month_path}\{departement}")))[0]
-                workbook = load_workbook(f'{month_path}\{departement}\{file_name}').worksheets[0]
+                workbook = load_workbook(f'{month_path}\{departement}\{file_name}', read_only=True).worksheets[0]
                 for row in workbook.iter_rows(min_row=11, values_only=True):
                     svod_sheet.append(row)
             except Exception as e:
@@ -36,8 +36,9 @@ class Comparer:
                 print(e)
         
         for report_row in range(6, svod_sheet.max_row+1):
-                svod_sheet["W{}".format(report_row)] = "=V{0}-U{0}".format(report_row)
-                svod_sheet["X{}".format(report_row)] = "=W{0}*T{0}".format(report_row)
-                svod_sheet["AC{}".format(report_row)] = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+            svod_sheet.cell(row=report_row, column=23).value = "=V{0}-U{0}".format(report_row)
+            svod_sheet.cell(row=report_row, column=24).value = "=W{0}*T{0}".format(report_row)
+            svod_sheet.cell(row=report_row, column=29).value = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+            svod_sheet.cell(row=report_row, column=25).value = "=ЕСЛИ(ЕПУСТО(AL{0});0;ОКРУГЛ((X{0}*AL{0});0))".format(report_row)
                 
         svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
