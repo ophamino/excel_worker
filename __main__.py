@@ -2,7 +2,10 @@ from logic.dirs_worker import tree_dir
 from logic.file_worker import change_log
 from logic.comparer import comparer, caluclater
 from logic.const import MONTH_LIST
+from logic.comparer import bicu
 
+
+bicu.comparer(5)
 
 def main():
     print()
