@@ -39,6 +39,5 @@ class Comparer:
             svod_sheet.cell(row=report_row, column=23).value = "=V{0}-U{0}".format(report_row)
             svod_sheet.cell(row=report_row, column=24).value = "=W{0}*T{0}".format(report_row)
             svod_sheet.cell(row=report_row, column=29).value = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
-            svod_sheet.cell(row=report_row, column=25).value = "=ЕСЛИ(ЕПУСТО(AL{0});0;ОКРУГЛ((X{0}*AL{0});0))".format(report_row)
                 
         svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")

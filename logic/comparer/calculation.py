@@ -96,7 +96,6 @@ class Calculation:
                 worksheet["W{0}".format(report_row)] = "=V{0}-U{0}".format(report_row)
                 worksheet["X{0}".format(report_row)] = "=W{0}*T{0}".format(report_row)
                 worksheet["AC{0}".format(report_row)] = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
-                worksheet["Y{0}".format(report_row)] = "=ЕСЛИ(ЕПУСТО(AL{0});0;ОКРУГЛ((X{0}*AL{0});0))".format(report_row)
                 if worksheet.cell(row=report_row, column=6).value == "None":
                     worksheet.cell(row=report_row, column=6).value = ""
                 if worksheet.cell(row=report_row, column=19).value == "None":
