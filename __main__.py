@@ -1,7 +1,7 @@
 from logic.dirs_worker import tree_dir
 from logic.file_worker import change_log
 from logic.comparer import comparer, caluclater
-from logic.const import MONTH_LIST
+from logic.const import MONTH_LIST, MAIN_DIR
 from logic.comparer import bicu
 
 
@@ -30,7 +30,10 @@ def main():
             break
 
         if action_number == 1:
-            change_log()
+            change_log(
+                static=f'{MAIN_DIR}\Потребители\Реестр потребителей.xlsx', 
+                change=f"./template/Реестр потребителей для сравнения.xlsx",
+                upload_to=f'{MAIN_DIR}\Потребители\Журнал изменений.xlsx')
 
         if action_number == 2:
             for number, month in enumerate(MONTH_LIST, 1):

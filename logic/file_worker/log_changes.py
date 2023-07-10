@@ -55,7 +55,7 @@ def search_changes(static_file_sheet: Worksheet, changes_file_sheet: Worksheet) 
     return changes_data
 
 
-def append_data_in_log(data: list[str]) -> None:
+def append_data_in_log(data: list[str], upload_to: str) -> None:
     if log_file_name not in os.listdir(f'{MAIN_DIR}\Потребители'):
         log_file = load_workbook("./template/log.xlsx").save(f'{MAIN_DIR}\Потребители\{log_file_name}')
     log_file = load_workbook(f'{MAIN_DIR}\Потребители\{log_file_name}')
@@ -64,14 +64,14 @@ def append_data_in_log(data: list[str]) -> None:
 
         for log_data in data:
             log_sheet.append(log_data)
-        log_file.save(f'{MAIN_DIR}\Потребители\{log_file_name}')
+        log_file.save(upload_to)
     except Exception:
         print("[ERROR] Листа с текущим годом не существует, создайте его перед тем как начать работу")
 
 
-def change_log():
-    static_file = load_workbook(f'{MAIN_DIR}\Потребители\{ static_file_name}', data_only=True)
-    changes_file = load_workbook(f"./template/{ changes_file_name}", data_only=True)
+def change_log(static: str, change: str, upload_to: str):
+    static_file = load_workbook(static, data_only=True)
+    changes_file = load_workbook(static, data_only=True)
 
     static_file_sheet =  static_file.worksheets[0]
     changes_file_sheet =  changes_file.worksheets[0]
@@ -91,7 +91,7 @@ def change_log():
     all_data = changes_data + added_data + deleted_data
     static_file.save(f"./template/Реестр потребителей для сравнения.xlsx")
     print("[INFO] записываем изменения в Журнал")
-    append_data_in_log(all_data)
+    append_data_in_log(all_data, upload_to)
     print(
         f"\n[INFO] Измененно строк: {len(changes_data)}\n"
         f"[INFO] Добавленно строк: {len(added_data)}\n"
