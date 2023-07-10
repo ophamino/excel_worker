@@ -28,7 +28,9 @@ def start_consumer():
                 print(f'{number}. {month}')
             month = int(input('Введите номер месяца: '))
             print("1. Бытовое потребление",
-                  '2. Комерческое потребление', sep='\n')
+                  '2. Комерческое потребление',
+                  "3. Общая",
+                  sep='\n')
             status = input("Выберите статус сводной ведомости: ")
             if status == "1":
                 try:
@@ -37,6 +39,8 @@ def start_consumer():
                     print('Введены неверные данные, повторите попытку.')
             if status == "2":
                 comparer.comparer("Коммерческого", month)
+            if status == "3":
+                comparer.total_comparer(month)
         if action == 3:
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')
@@ -52,3 +56,4 @@ def start_consumer():
                     print('Введены неверные данные, повторите попытку.')
             if status == "2":
                 caluclater.calculate("Коммерческого", month)
+        break

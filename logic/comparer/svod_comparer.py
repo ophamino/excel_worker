@@ -1,7 +1,7 @@
 from openpyxl import load_workbook
+
 from datetime import datetime
 import os
-from openpyxl.styles import numbers
 
 from logic.const import MAIN_DIR, MONTH_LIST
 
@@ -41,3 +41,24 @@ class Comparer:
             svod_sheet.cell(row=report_row, column=29).value = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
                 
         svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
+    
+    
+    def total_comparer(self, month):
+        static_path = f'{self.main_dir}\Сводный баланс\{self.year}\УПП'
+        
+        if not static_path in os.listdir(static_path):
+            svod = load_workbook('template/svod.xlsx')
+            svod.save(f"{static_path}\Сводная ведомость потребителей.xlsx")
+        svod = load_workbook(f"{static_path}\Сводная ведомость потребителей.xlsx")
+        svod_sheet = svod[str(month)]
+        try:
+            comerce = load_workbook(f"{static_path}\Сводная ведомость Коммерческого потребления.xlsx")[str(month)]
+            individual = load_workbook(f"{static_path}\Сводная ведомость Бытового потребления.xlsx")[str(month)]
+        except Exception as e:
+            print(e)
+        
+        for row in individual.iter_rows(min_row=5, values_only=True):
+            svod_sheet.append(row)
+        for row in comerce.iter_rows(min_row=5, values_only=True):
+            svod_sheet.append(row)
+        svod.save(f"{static_path}\Сводная ведомость потребителей.xlsx")

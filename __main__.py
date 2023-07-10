@@ -1,5 +1,3 @@
-from logic.comparer import bicu
-
 from logic.consumers import start_consumer
 from logic.start_bicu import start_bicu
 
