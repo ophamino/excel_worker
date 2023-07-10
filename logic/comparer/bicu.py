@@ -77,7 +77,6 @@ def calculate(month: str) -> None:
                         ]
                     )
                     break
-            print(f"{row_svod, svod_sheet.max_row}")
         print("[INFO] Данные загружены")
         result.save(MAIN_DIR + "\\result.xlsx")
 
@@ -88,7 +87,7 @@ def calculate(month: str) -> None:
                     if result_sheet.cell(row=row, column=3).value[2:4] == departament:
                         departament_data.append([result_sheet.cell(row=row, column=i).value for i in range(1, result_sheet.max_column + 1)])
                 except Exception as e:
-                    print("Ошибка", e)
+                    pass
             workbook = load_workbook('./template/bicu_v.xlsx')
             worksheet = workbook.worksheets[0]
             for departament_row in departament_data:
