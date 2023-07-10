@@ -1,7 +1,5 @@
 from openpyxl import load_workbook
-import os
 from datetime import datetime
-from openpyxl.styles import numbers
 
 from logic.const import MAIN_DIR, MONTH_LIST, DEPARTAMENT_NAMES_WITH_KEYS
 
