@@ -1,50 +1,31 @@
-from logic.dirs_worker import tree_dir
-from logic.file_worker import change_log
-from logic.comparer import comparer, caluclater
-from logic.const import MONTH_LIST, MAIN_DIR
-from logic.comparer import bicu
+from file_worker import change_log
+from .const import MAIN_DIR, MONTH_LIST
+from comparer import comparer, caluclater
 
 
-def main():
-    print()
-    print("Welcome!")
-    main_action = [
-        "",
-        f"----------------Меню---------------------------",
+def start_consumer():
+    menu = [
+         "",
+        f"----------------Потребители-------------------",
         "Выберите действие, которое хотите совершить: ",
-        "1. Потребители",
-        "2. БИКУ",
-        "3. Отчеты"
+        "1. Сверить статические данные",
+        "2. Сформировать сводную ведомость",
+        "3. Сформировать расчетную ведомость"
         "________________________________________________"
         ""
     ]
+    print(*menu, sep='\n')
+    action = int(input("Выберите порядковый номер действия:" ))
     while True:
-        print(*main_action, sep='\n')
-        action = int(input("Выберите порядковый номер действия: "))
-        
-        if action == 1:
-            pass
-        if action == 2:
-            pass
-        if action == 3:
-            pass
-    
-    while True:
-        print(*subaction, sep='\n')
-        action_number = int(input("Выберите порядковый номер действия: "))
-
-        if action_number == 0:
+        if action == 0:
             print("Вы вышли из программы. Всего хорошего!")
             break
-
-        if action_number == 1:
-            action = int(input())
+        if action == 1:
             change_log(
                 static=f'{MAIN_DIR}\Потребители\Реестр потребителей.xlsx', 
                 change=f"./template/Реестр потребителей для сравнения.xlsx",
                 upload_to=f'{MAIN_DIR}\Потребители\Журнал изменений.xlsx')
-
-        if action_number == 2:
+        if action == 2:
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')
             month = int(input('Введите номер месяца: '))
@@ -58,8 +39,7 @@ def main():
                     print('Введены неверные данные, повторите попытку.')
             if status == "2":
                 comparer.comparer("Коммерческого", month)
-
-        if action_number == 3:
+        if action == 3:
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')
             month = int(input('Введите номер месяца:  ')) - 1
@@ -74,8 +54,3 @@ def main():
                     print('Введены неверные данные, повторите попытку.')
             if status == "2":
                 caluclater.calculate("Коммерческого", month)
-
-
-if __name__ == "__main__":
-    main()
-    
