@@ -1,30 +1,28 @@
-from file_worker import change_log
+from .file_worker import change_log
 from .const import MAIN_DIR, MONTH_LIST
-from comparer import comparer, caluclater
+from .comparer import comparer, caluclater
 
 
 def start_consumer():
     menu = [
          "",
-        f"----------------Потребители-------------------",
+        "----------------Потребители-------------------",
         "Выберите действие, которое хотите совершить: ",
         "1. Сверить статические данные",
         "2. Сформировать сводную ведомость",
-        "3. Сформировать расчетную ведомость"
-        "________________________________________________"
+        "3. Сформировать расчетную ведомость",
+        "0. Главное меню",
+        "________________________________________________",
         ""
     ]
     print(*menu, sep='\n')
-    action = int(input("Выберите порядковый номер действия:" ))
+    action = int(input("Выберите порядковый номер действия: " ))
     while True:
         if action == 0:
             print("Вы вышли из программы. Всего хорошего!")
             break
         if action == 1:
-            change_log(
-                static=f'{MAIN_DIR}\Потребители\Реестр потребителей.xlsx', 
-                change=f"./template/Реестр потребителей для сравнения.xlsx",
-                upload_to=f'{MAIN_DIR}\Потребители\Журнал изменений.xlsx')
+            change_log()
         if action == 2:
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')

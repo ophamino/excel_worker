@@ -7,8 +7,8 @@ from openpyxl.worksheet.worksheet import Worksheet
 from logic.const import MAIN_DIR
 
 
-static_file_name = 'Реестр потребителей.xlsx'
-changes_file_name = 'Реестр потребителей для сравнения.xlsx'
+static_file_name = 'Реестр БИКУ.xlsx'
+changes_file_name = 'Реестр БИКУ для сравнения.xlsx'
 log_file_name = 'Журнал изменений.xlsx'
 
 
@@ -30,7 +30,7 @@ def get_changes_data(static_file_sheet: Worksheet, changes_file_sheet: Worksheet
             changes.append(
                 [
                     1,
-                    static_file_sheet.cell(row=changes_row, column=4).value,
+                    static_file_sheet.cell(row=changes_row, column=3).value,
                     static_file_sheet.cell(row=4, column=column).value,
                     changes_file_sheet.cell(row=changes_row, column=column).coordinate,
                     changes_file_sheet.cell(row=changes_row, column=column).value,
@@ -46,9 +46,9 @@ def get_changes_data(static_file_sheet: Worksheet, changes_file_sheet: Worksheet
 
 def search_changes(static_file_sheet: Worksheet, changes_file_sheet: Worksheet) -> list:
     changes_data = []
-    for row_static in range(9, static_file_sheet.max_row + 1):
-        for row_changes in range(9, changes_file_sheet.max_row + 1):
-            if static_file_sheet.cell(row=row_static, column=4).value == changes_file_sheet.cell(row=row_changes, column=4).value:
+    for row_static in range(5, static_file_sheet.max_row + 1):
+        for row_changes in range(5, changes_file_sheet.max_row + 1):
+            if static_file_sheet.cell(row=row_static, column=3).value == changes_file_sheet.cell(row=row_changes, column=3).value:
                 change =  get_changes_data(static_file_sheet, changes_file_sheet, row_static, row_changes)
                 changes_data = changes_data + change
                 break
@@ -56,29 +56,29 @@ def search_changes(static_file_sheet: Worksheet, changes_file_sheet: Worksheet) 
 
 
 def append_data_in_log(data: list[str]) -> None:
-    if log_file_name not in os.listdir(f'{MAIN_DIR}\Потребители'):
-        log_file = load_workbook("./template/log.xlsx").save(f'{MAIN_DIR}\Потребители\{log_file_name}')
-    log_file = load_workbook(f'{MAIN_DIR}\Потребители\{log_file_name}')
+    if log_file_name not in os.listdir(f'{MAIN_DIR}\Бику'):
+        log_file = load_workbook("./template/log.xlsx").save(f'{MAIN_DIR}\Бику\{log_file_name}')
+    log_file = load_workbook(f'{MAIN_DIR}\Бику\{log_file_name}')
     try:
         log_sheet = log_file[str( datetime.now().date().year)]
 
         for log_data in data:
             log_sheet.append(log_data)
-        log_file.save(f'{MAIN_DIR}\Потребители\{log_file_name}')
+        log_file.save(f'{MAIN_DIR}\Бику\{log_file_name}')
     except Exception:
         print("[ERROR] Листа с текущим годом не существует, создайте его перед тем как начать работу")
 
 
 def change_log():
-    static_file = load_workbook(f'{MAIN_DIR}\Потребители\{ static_file_name}', data_only=True)
+    static_file = load_workbook(f'{MAIN_DIR}\Бику\{ static_file_name}', data_only=True)
     changes_file = load_workbook(f"./template/{ changes_file_name}", data_only=True)
 
     static_file_sheet =  static_file.worksheets[0]
     changes_file_sheet =  changes_file.worksheets[0]
 
 
-    changes_ID = set([changes_file_sheet.cell(row=i, column=4).value for i in range(9, changes_file_sheet.max_row + 1)])
-    static_ID = set([static_file_sheet.cell(row=i, column=4).value for i in range(9, static_file_sheet.max_row + 1)])
+    changes_ID = set([changes_file_sheet.cell(row=i, column=3).value for i in range(5, changes_file_sheet.max_row + 1)])
+    static_ID = set([static_file_sheet.cell(row=i, column=3).value for i in range(5, static_file_sheet.max_row + 1)])
 
     added_ID = list(static_ID.difference(changes_ID))
     deleted_ID = list(changes_ID.difference(static_ID))
@@ -89,7 +89,7 @@ def change_log():
     deleted_data =  get_status_data(deleted_ID, status="Удалено")
 
     all_data = changes_data + added_data + deleted_data
-    static_file.save(f"./template/Реестр потребителей для сравнения.xlsx")
+    static_file.save(f"./template/Реестр Бику для сравнения.xlsx")
     print("[INFO] записываем изменения в Журнал")
     append_data_in_log(all_data)
     print(
