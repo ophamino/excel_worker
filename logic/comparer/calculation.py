@@ -89,13 +89,25 @@ class Calculation:
             for departament_row in departament_data:
                 worksheet.append(departament_row)
             for report_row in range(6, worksheet.max_row+1):
-                worksheet["W{0}".format(report_row)] = "=V{0}-U{0}".format(report_row)
-                worksheet["X{0}".format(report_row)] = "=W{0}*T{0}".format(report_row)
-                worksheet["AC{0}".format(report_row)] = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+                worksheet["W{0}".format(report_row)].value = "=V{0}-U{0}".format(report_row)
+                worksheet["X{0}".format(report_row)].value = "=W{0}*T{0}".format(report_row)
+                worksheet["AC{0}".format(report_row)].value = "=X{0}+Y{0}+Z{0}+AA{0}+AB{0}".format(report_row)
+                worksheet.cell(row=report_row, column=25).value = "=IF(ISBLANK($AL${0}),0,ROUND(($X${0}*$AL${0}),0))".format(report_row)
+            
+                
                 if worksheet.cell(row=report_row, column=6).value == "None":
                     worksheet.cell(row=report_row, column=6).value = ""
                 if worksheet.cell(row=report_row, column=19).value == "None":
                     worksheet.cell(row=report_row, column=19).value = ""
+                    
+            worksheet.cell(row=4, column=23).value = "=SUM(W6:W{0})".format(worksheet.max_row + 1)
+            worksheet.cell(row=4, column=24).value = "=SUM(X6:X{0})".format(worksheet.max_row + 1)
+            worksheet.cell(row=4, column=25).value = "=SUM(Y6:Y{0})".format(worksheet.max_row + 1)
+            worksheet.cell(row=4, column=26).value = "=SUM(Z6:Z{0})".format(worksheet.max_row + 1)
+            worksheet.cell(row=4, column=27).value = "=SUM(AA6:AA{0})".format(worksheet.max_row + 1)
+            worksheet.cell(row=4, column=28).value = "=SUM(AB6:AB{0})".format(worksheet.max_row + 1)
+            worksheet.cell(row=4, column=29).value = "=SUM(AC6:AC{0})".format(worksheet.max_row + 1)
+            
             stuf_name = DEPARTAMENT_NAMES_WITH_KEYS[departament]
             mon = MONTH_LIST[month]
 
