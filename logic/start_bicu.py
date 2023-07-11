@@ -26,7 +26,7 @@ def start_bicu():
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')
             month = int(input('Введите номер месяца:  ')) - 1
-            comparer(month)
+            comparer(month + 1)
         if action == 3:
             for number, month in enumerate(MONTH_LIST, 1):
                 print(f'{number}. {month}')

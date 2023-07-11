@@ -28,6 +28,13 @@ def comparer(month: str) -> None:
                       f"[INFO] Папка: {month_path}\{departement}")
                 print(e)
         
+        letter_list = ["R", "S", "T", "U", "V", "W"]
+            
+        for letter in letter_list:
+            svod_sheet[f"{letter}4"] = f'=SUMIFS({letter}8:{letter}{svod_sheet.max_row + 1},$E8:$E{svod_sheet.max_row + 1},"Прием электроэнергии")'
+            svod_sheet[f"{letter}5"] = f'=SUMIFS({letter}8:{letter}{svod_sheet.max_row + 1},$E8:$E{svod_sheet.max_row + 1},"Прием электроэнергии")'
+            svod_sheet[f"{letter}6"] = f'={letter}4-{letter}5'
+    
         svod.save(f"{static_path}\Сводная ведомость БИКУ.xlsx")
 
 
@@ -96,6 +103,15 @@ def calculate(month: str) -> None:
                 worksheet["R{0}".format(report_row)] = "=Q{0}-P{0}".format(report_row)
                 worksheet["S{0}".format(report_row)] = "=R{0}*O{0}".format(report_row)
                 worksheet["W{0}".format(report_row)] = "=S{0}+T{0}+U{0}+V{0}".format(report_row)
+            
+            
+            letter_list = ["R", "S", "T", "U", "V", "W"]
+            
+            for letter in letter_list:
+                worksheet[f"{letter}4"] = f'=SUMIFS({letter}8:{letter}{worksheet.max_row + 1},$E8:$E{worksheet.max_row + 1},"Прием электроэнергии")'
+                worksheet[f"{letter}5"] = f'=SUMIFS({letter}8:{letter}{worksheet.max_row + 1},$E8:$E{worksheet.max_row + 1},"Прием электроэнергии")'
+                worksheet[f"{letter}6"] = f'={letter}4-{letter}5'
+            
         
             stuf_name = DEPARTAMENT_NAMES_WITH_KEYS[departament]
             mon = MONTH_LIST[month]
