@@ -57,8 +57,10 @@ class Comparer:
         except Exception as e:
             print(e)
         
-        for row in individual.iter_rows(min_row=5, values_only=True):
+        for row in individual.iter_rows(min_row=6, values_only=True):
             svod_sheet.append(row)
-        for row in comerce.iter_rows(min_row=5, values_only=True):
+        for row in comerce.iter_rows(min_row=6, values_only=True):
             svod_sheet.append(row)
         svod.save(f"{static_path}\Сводная ведомость потребителей.xlsx")
+
+

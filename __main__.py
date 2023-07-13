@@ -1,5 +1,9 @@
 from logic.consumers import start_consumer
 from logic.start_bicu import start_bicu
+from logic.comparer.balance import Balance
+
+test = Balance()
+test.collect_total_data(5)
 
 def main():
     print()

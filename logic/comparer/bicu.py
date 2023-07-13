@@ -10,7 +10,7 @@ def comparer(month: str) -> None:
         static_path = f'{MAIN_DIR}\Сводный баланс\{datetime.now().year}\Бику'
 
         if not static_path in os.listdir(static_path):
-            svod = load_workbook('template/bicu.xlsx')
+            svod = load_workbook('./template/bicu.xlsx')
             svod.save(f"{static_path}\Сводная ведомость БИКУ.xlsx")
         svod = load_workbook(f"{static_path}\Сводная ведомость БИКУ.xlsx")
         svod_sheet = svod[str(month)]
@@ -32,7 +32,7 @@ def comparer(month: str) -> None:
             
         for letter in letter_list:
             svod_sheet[f"{letter}4"] = f'=SUMIFS({letter}8:{letter}{svod_sheet.max_row + 1},$E8:$E{svod_sheet.max_row + 1},"Прием электроэнергии")'
-            svod_sheet[f"{letter}5"] = f'=SUMIFS({letter}8:{letter}{svod_sheet.max_row + 1},$E8:$E{svod_sheet.max_row + 1},"Прием электроэнергии")'
+            svod_sheet[f"{letter}5"] = f'=SUMIFS({letter}8:{letter}{svod_sheet.max_row + 1},$E8:$E{svod_sheet.max_row + 1},"Передача электроэнергии")'
             svod_sheet[f"{letter}6"] = f'={letter}4-{letter}5'
     
         svod.save(f"{static_path}\Сводная ведомость БИКУ.xlsx")
@@ -109,7 +109,7 @@ def calculate(month: str) -> None:
             
             for letter in letter_list:
                 worksheet[f"{letter}4"] = f'=SUMIFS({letter}8:{letter}{worksheet.max_row + 1},$E8:$E{worksheet.max_row + 1},"Прием электроэнергии")'
-                worksheet[f"{letter}5"] = f'=SUMIFS({letter}8:{letter}{worksheet.max_row + 1},$E8:$E{worksheet.max_row + 1},"Прием электроэнергии")'
+                worksheet[f"{letter}5"] = f'=SUMIFS({letter}8:{letter}{worksheet.max_row + 1},$E8:$E{worksheet.max_row + 1},"Передача электроэнергии")'
                 worksheet[f"{letter}6"] = f'={letter}4-{letter}5'
             
         
