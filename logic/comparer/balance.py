@@ -131,17 +131,7 @@ class Balance:
                 "name": consumers.cell(row=row, column=8).value,
                 "expenses": consumers.cell(row=row, column=29).value
             }
-        
-        with open(FILE_JSON, 'w') as outfile:
-            outfile.write(
-                json.dumps(
-                hash_table,
-                sort_keys=False,
-                indent=4,
-                ensure_ascii=False,
-                separators=(',', ': ')
-                )
-            )
+
 
     def get_balance_hash(self, network_hash: dict[str, dict[str, str]], consumers_hash:  dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
         """
