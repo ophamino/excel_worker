@@ -16,9 +16,9 @@ class Comparer:
         static_path = f'{self.main_dir}\Сводный баланс\{self.year}\УПП'
 
         if not static_path in os.listdir(static_path):
-            svod = load_workbook('template/svod.xlsx')
+            svod = load_workbook('template/svod.xlsx', data_only=True)
             svod.save(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
-        svod = load_workbook(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx")
+        svod = load_workbook(f"{static_path}\Сводная ведомость {file_status} потребления.xlsx", data_only=True)
         svod_sheet = svod[str(month)]
 
         month_path = f"{static_path}\{MONTH_LIST[month - 1]}"
@@ -27,8 +27,8 @@ class Comparer:
         for departement in os.listdir(month_path):
             try:
                 file_name = list(filter(lambda x: file_status in x, os.listdir(f"{month_path}\{departement}")))[0]
-                workbook = load_workbook(f'{month_path}\{departement}\{file_name}', read_only=True).worksheets[0]
-                for row in workbook.iter_rows(min_row=11, values_only=True):
+                workbook = load_workbook(f'{month_path}\{departement}\{file_name}', data_only=True).worksheets[0]
+                for row in workbook.iter_rows(min_row=6, values_only=True):
                     svod_sheet.append(row)
             except Exception as e:
                 print(f"[INFO] Сформировать документ невозможно, Файл отсутсвует или не соответсвует синтаксису."
@@ -47,13 +47,13 @@ class Comparer:
         static_path = f'{self.main_dir}\Сводный баланс\{self.year}\УПП'
         
         if not static_path in os.listdir(static_path):
-            svod = load_workbook('template/svod.xlsx')
+            svod = load_workbook('template/svod.xlsx', data_only=True)
             svod.save(f"{static_path}\Сводная ведомость потребителей.xlsx")
-        svod = load_workbook(f"{static_path}\Сводная ведомость потребителей.xlsx")
+        svod = load_workbook(f"{static_path}\Сводная ведомость потребителей.xlsx", data_only=True)
         svod_sheet = svod[str(month)]
         try:
-            comerce = load_workbook(f"{static_path}\Сводная ведомость Коммерческого потребления.xlsx")[str(month)]
-            individual = load_workbook(f"{static_path}\Сводная ведомость Бытового потребления.xlsx")[str(month)]
+            comerce = load_workbook(f"{static_path}\Сводная ведомость Коммерческого потребления.xlsx", data_only=True)[str(month)]
+            individual = load_workbook(f"{static_path}\Сводная ведомость Бытового потребления.xlsx", data_only=True)[str(month)]
         except Exception as e:
             print(e)
         

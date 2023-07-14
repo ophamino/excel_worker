@@ -12,10 +12,10 @@ class Calculation:
         self.month = datetime.now().month
 
     def calculate(self, file_status: str, month: str) -> None:
-        static_file = load_workbook(f'{MAIN_DIR}\Потребители\Реестр потребителей.xlsx').worksheets[0]
-        svod = load_workbook(f'{MAIN_DIR}\Сводный баланс\{self.year}\УПП\Сводная ведомость {file_status} потребления.xlsx')
+        static_file = load_workbook(f'{MAIN_DIR}\Потребители\Реестр потребителей.xlsx', data_only=True).worksheets[0]
+        svod = load_workbook(f'{MAIN_DIR}\Сводный баланс\{self.year}\УПП\Сводная ведомость {file_status} потребления.xlsx', data_only=True)
         svod_sheet  = svod.worksheets[month - 1]
-        result = load_workbook('template\\rv.xlsx')
+        result = load_workbook('template\\rv.xlsx', data_only=True)
         result_sheet = result.worksheets[0]
  
         print("[INFO] Собираем данные")
@@ -33,9 +33,9 @@ class Calculation:
                             str(static_file.cell(row=row_static, column=7).value),  # F
                             static_file.cell(row=row_static, column=8).value,  # G
                             static_file.cell(row=row_static, column=9).value,  # H
-                            static_file.cell(row=row_static, column=10).value,  # I
-                            static_file.cell(row=row_static, column=11).value,  # J
-                            static_file.cell(row=row_static, column=12).value,  # K
+                            static_file.cell(row=row_static, column=12).value,  # I
+                            static_file.cell(row=row_static, column=13).value,  # J
+                            static_file.cell(row=row_static, column=14).value,  # K
                             static_file.cell(row=row_static, column=20).value,  # L
                             static_file.cell(row=row_static, column=21).value,  # M
                             static_file.cell(row=row_static, column=22).value,  # N
@@ -84,7 +84,7 @@ class Calculation:
                         departament_data.append([result_sheet.cell(row=row, column=i).value for i in range(1, result_sheet.max_column + 1)])
                 except Exception:
                     pass
-            workbook = load_workbook('./template/rv.xlsx')
+            workbook = load_workbook('./template/rv.xlsx', data_only=True)
             worksheet = workbook.worksheets[0]
             for departament_row in departament_data:
                 worksheet.append(departament_row)

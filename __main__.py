@@ -3,7 +3,7 @@ from logic.start_bicu import start_bicu
 from logic.comparer.balance import Balance
 
 test = Balance()
-test.collect_total_data(5)
+test.get_consumers_hash(6)
 
 def main():
     print()
