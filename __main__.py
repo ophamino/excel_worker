@@ -2,8 +2,10 @@ from logic.consumers import start_consumer
 from logic.start_bicu import start_bicu
 from logic.comparer.balance import Balance
 
+
 test = Balance()
-test.get_consumers_hash(6)
+test.create_balance(6)
+
 
 def main():
     print()
