@@ -1,10 +1,10 @@
 from logic.consumers import start_consumer
 from logic.start_bicu import start_bicu
-from logic.comparer.balance import Balance
+from logic.analytics.balance import BalanceAnalytics
 
 
-test = Balance()
-test.create_balance(6)
+balance = BalanceAnalytics()
+balance.create_analytics(6)
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
     print("Welcome!")
     main_action = [
         "",
-        f"----------------Меню---------------------------",
+        "----------------Меню---------------------------",
         "Выберите действие, которое хотите совершить: ",
         "1. Потребители",
         "2. БИКУ",
